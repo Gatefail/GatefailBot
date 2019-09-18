@@ -5,10 +5,34 @@
 
 trigger:
 - master
+- feature/*
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: Build
+    inputs:
+      containerRegistry: 'Docker Hub'
+      repository: '$(RepoName)'
+      command: 'build'
+      Dockerfile: '**/Dockerfile'
+- task: Push
+  condition: and(succeeded(), eq(variables['Build.SourceBranch', 'refs/heads/master']))
+  inputs:
+    containerRegistry: 'Docker Hub'
+    repository: '$(RepoName)'
+    command: 'push'
+- task: Deploy
+  condition: and(succeeded(), eq(variables['Build.SourceBranch', 'refs/heads/master']))
+  inputs:
+    sshEndpoint: 'Droplet'
+    runOptions: 'inline'
+    inline: |
+      for id in $(docker ps -a -q --filter name=gatefail-bot); do docker stop $id && docker rm $id; done
+      docker run --name gatefail-bot \
+      -e DiscordToken=$(token) \
+      -e ConnectionStrings:BotDb="Host=$(dbhost);Database=$(dbname);Username=$(dbuser);Password=$(dbpassword)" \
+      -e ASPNETCORE_ENVIRONMENT=production \
+      -d gatefail/gatefail-bot:$(Build.BuildId)
+    failOnStdErr: true
