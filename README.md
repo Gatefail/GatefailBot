@@ -1,6 +1,6 @@
 # DiscordWowTracker
 
-[![Build Status](https://dev.azure.com/nikolaitopping/nikolaitopping/_apis/build/status/Topping.DiscordWowTracker?branchName=master)](https://dev.azure.com/nikolaitopping/nikolaitopping/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/Gatefail/GatefailBot/_apis/build/status/Gatefail.GatefailBot?branchName=master)](https://dev.azure.com/Gatefail/GatefailBot/_build/latest?definitionId=1&branchName=master)
 
 This bot is just a small Discord bot written in C#, targeting .NET Core 2.2
 
