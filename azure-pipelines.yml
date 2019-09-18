@@ -11,19 +11,22 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: Build
+- task: Docker@2
+  displayName: Build
   inputs:
     containerRegistry: 'Docker Hub'
     repository: '$(RepoName)'
     command: 'build'
     Dockerfile: '**/Dockerfile'
-- task: Push
+- task: Docker@2
+  displayName: Push
   condition: and(succeeded(), eq(variables['Build.SourceBranch', 'refs/heads/master']))
   inputs:
     containerRegistry: 'Docker Hub'
     repository: '$(RepoName)'
     command: 'push'
-- task: Deploy
+- task: SSH@0
+  displayName: Deploy
   condition: and(succeeded(), eq(variables['Build.SourceBranch', 'refs/heads/master']))
   inputs:
     sshEndpoint: 'Droplet'
