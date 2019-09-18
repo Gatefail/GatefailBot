@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GatefailBot.Migrations
 {
-    [DbContext(typeof(WowTrackerContext))]
+    [DbContext(typeof(GatefailContext))]
     [Migration("20190918195601_initial")]
     partial class initial
     {

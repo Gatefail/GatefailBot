@@ -30,14 +30,14 @@ namespace GatefailBot
 
             var serviceProvider = new ServiceCollection()
                 .Configure<BotConfiguration>(configuration)
-                .AddDbContext<WowTrackerContext>(op => op.UseNpgsql(configuration.GetBotDbConnectionString()))
+                .AddDbContext<GatefailContext>(op => op.UseNpgsql(configuration.GetBotDbConnectionString()))
                 .AddHttpClient()
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<IGuildService, GuildService>()
                 .AddTransient<ICommandChannelRestrictionService, CommandChannelRestrictionService>()
                 .BuildServiceProvider();
 
-            var dbContext = serviceProvider.GetRequiredService<WowTrackerContext>();
+            var dbContext = serviceProvider.GetRequiredService<GatefailContext>();
 
             dbContext.Database.Migrate();
 

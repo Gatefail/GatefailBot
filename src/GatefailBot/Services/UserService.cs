@@ -19,9 +19,9 @@ namespace GatefailBot.Services
 
     public class UserService : IUserService
     {
-        private readonly WowTrackerContext _db;
+        private readonly GatefailContext _db;
 
-        public UserService(WowTrackerContext db)
+        public UserService(GatefailContext db)
         {
             _db = db;
         }

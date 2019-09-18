@@ -16,9 +16,9 @@ namespace GatefailBot.Services
 
     public class CommandChannelRestrictionService : ICommandChannelRestrictionService
     {
-        private readonly WowTrackerContext _db;
+        private readonly GatefailContext _db;
 
-        public CommandChannelRestrictionService(WowTrackerContext db)
+        public CommandChannelRestrictionService(GatefailContext db)
         {
             _db = db;
         }

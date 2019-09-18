@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GatefailBot.Database
 {
-    public class WowTrackerContext : DbContext
+    public class GatefailContext : DbContext
     {
-        public WowTrackerContext(DbContextOptions options) : base(options)
+        public GatefailContext(DbContextOptions options) : base(options)
         {
         }
 

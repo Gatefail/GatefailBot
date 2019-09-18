@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace GatefailBot.Database
 {
-    public class WowTrackerContextDesignTimeFactory : IDesignTimeDbContextFactory<WowTrackerContext>
+    public class GatefailContextDesignTimeFactory : IDesignTimeDbContextFactory<GatefailContext>
     {
-        public WowTrackerContext CreateDbContext(string[] args)
+        public GatefailContext CreateDbContext(string[] args)
         {
             var configuration = BotConfigurationBuilder.Build();
 
-            var builder = new DbContextOptionsBuilder<WowTrackerContext>();
+            var builder = new DbContextOptionsBuilder<GatefailContext>();
 
             var connectionString = configuration.GetBotDbConnectionString();
 
             builder.UseSqlite(connectionString);
 
-            return new WowTrackerContext(builder.Options);
+            return new GatefailContext(builder.Options);
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GatefailBot.Migrations
 {
-    [DbContext(typeof(WowTrackerContext))]
+    [DbContext(typeof(GatefailContext))]
     partial class WowTrackerContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

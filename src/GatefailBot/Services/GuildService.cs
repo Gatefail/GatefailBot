@@ -14,9 +14,9 @@ namespace GatefailBot.Services
 
     public class GuildService : IGuildService
     {
-        private readonly WowTrackerContext _db;
+        private readonly GatefailContext _db;
 
-        public GuildService(WowTrackerContext db)
+        public GuildService(GatefailContext db)
         {
             _db = db;
         }
