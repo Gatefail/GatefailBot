@@ -20,14 +20,14 @@ steps:
     Dockerfile: '**/Dockerfile'
 - task: Docker@2
   displayName: Push
-  condition: and(succeeded(), eq(variables['Build.SourceBranch', 'refs/heads/master']))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
     containerRegistry: 'Docker Hub'
     repository: '$(RepoName)'
     command: 'push'
 - task: SSH@0
   displayName: Deploy
-  condition: and(succeeded(), eq(variables['Build.SourceBranch', 'refs/heads/master']))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
     sshEndpoint: 'Droplet'
     runOptions: 'inline'
