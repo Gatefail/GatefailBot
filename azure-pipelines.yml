@@ -11,31 +11,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: Docker@2
-  displayName: Build
+- task: HelmDeploy@0
   inputs:
-    containerRegistry: 'Docker Hub'
-    repository: '$(RepoName)'
-    command: 'build'
-    Dockerfile: '**/Dockerfile'
-- task: Docker@2
-  displayName: Push
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  inputs:
-    containerRegistry: 'Docker Hub'
-    repository: '$(RepoName)'
-    command: 'push'
-- task: SSH@0
-  displayName: Deploy
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  inputs:
-    sshEndpoint: 'Droplet'
-    runOptions: 'inline'
-    inline: |
-      for id in $(docker ps -a -q --filter name=gatefail-bot); do docker stop $id && docker rm $id; done
-      docker run --name gatefail-bot \
-      -e DiscordToken=$(token) \
-      -e ConnectionStrings:BotDb="Host=$(dbhost);Database=$(dbname);Username=$(dbuser);Password=$(dbpassword)" \
-      -e ASPNETCORE_ENVIRONMENT=production \
-      -d gatefail/gatefail-bot:$(Build.BuildId)
-    failOnStdErr: true
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceConnection: 'GCP'
+    namespace: 'default'
+    command: 'install'
+    chartType: 'Name'
+    chartName: 'stable/postgresql'
