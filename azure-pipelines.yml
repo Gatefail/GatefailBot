@@ -1,4 +1,5 @@
 # Starter pipeline
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -11,6 +12,18 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: HelmInstaller@1
+  inputs:
+    helmVersionToInstall: 'latest'
+- task: HelmDeploy@0
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceConnection: 'GCP'
+    namespace: 'default'
+    command: 'init'
+    upgradeTiller: false
+    arguments: '--service-account tiller'
+    tillerNamespace: 'kube-system'
 - task: HelmDeploy@0
   inputs:
     connectionType: 'Kubernetes Service Connection'
