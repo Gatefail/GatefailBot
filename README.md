@@ -1,4 +1,4 @@
-# DiscordWowTracker
+# Gatefail Bot
 
 [![Build Status](https://dev.azure.com/Gatefail/GatefailBot/_apis/build/status/Gatefail.GatefailBot?branchName=master)](https://dev.azure.com/Gatefail/GatefailBot/_build/latest?definitionId=1&branchName=master)
 
