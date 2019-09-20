@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gatefailbot
+  labels:
+    app: gatefailbot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gatefailbot
+  template:
+    metadata:
+      labels:
+        app: gatefailbot
+    spec:
+      containers:
+      - name: gatefailbot
+        image: gatefail/gatefail-bot:latest
+        envFrom:
+        - secretRef:
+            name: gatefailbot-creds
+        ports:
+        - containerPort: 5002
