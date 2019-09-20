@@ -12,23 +12,17 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: HelmInstaller@1
+- task: Docker@2
+  displayName: Build
   inputs:
-    helmVersionToInstall: 'latest'
-- task: HelmDeploy@0
+    containerRegistry: 'Docker Hub'
+    repository: '$(RepoName)'
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
+- task: Docker@2
+  displayName: Push
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
-    connectionType: 'Kubernetes Service Connection'
-    kubernetesServiceConnection: 'GCP'
-    namespace: 'default'
-    command: 'init'
-    upgradeTiller: false
-    arguments: '--service-account tiller'
-    tillerNamespace: 'kube-system'
-- task: HelmDeploy@0
-  inputs:
-    connectionType: 'Kubernetes Service Connection'
-    kubernetesServiceConnection: 'GCP'
-    namespace: 'default'
-    command: 'install'
-    chartType: 'Name'
-    chartName: 'stable/postgresql'
+    containerRegistry: 'Docker Hub'
+    repository: '$(RepoName)'
+    command: 'push'
