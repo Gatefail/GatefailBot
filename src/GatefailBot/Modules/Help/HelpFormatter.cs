@@ -14,30 +14,22 @@ namespace GatefailBot.Modules.Help
     public class HelpFormatter : BaseHelpFormatter
     {
         private ICachedModuleService _cachedModuleService;
-        private ulong guildId;
         private readonly List<Command> _commands = new List<Command>();
 
         public HelpFormatter(CommandContext ctx) : base(ctx)
         {
             _cachedModuleService =
                 (ICachedModuleService)ctx.Services.GetService(typeof(ICachedModuleService));
-            guildId = ctx.Guild.Id;
         }
 
         public override BaseHelpFormatter WithCommand(Command command)
         {
-            if (_cachedModuleService.IsModuleEnabled(guildId, command.Module.ModuleType.FullName).GetAwaiter()
-                .GetResult())
-            {
-                _commands.Add(command);
-            }
+            _commands.Add(command);
             return this;
         }
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {
-            subcommands = subcommands.Where(c =>
-                _cachedModuleService.IsModuleEnabled(guildId, nameof(c.Module.ModuleType)).GetAwaiter().GetResult());
             _commands.AddRange(subcommands);
             return this;
         }

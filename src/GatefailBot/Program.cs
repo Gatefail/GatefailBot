@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using DSharpPlus.CommandsNext;
 using GatefailBot.Database;
+using GatefailBot.Helpers;
 using GatefailBot.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -36,7 +40,7 @@ namespace GatefailBot
                 ExpirationScanFrequency = TimeSpan.FromSeconds(30)
             });
             
-            
+            var moduleContainer = GetLoadedCommandModules();
             var serviceProvider = new ServiceCollection()
                 .Configure<BotConfiguration>(configuration)
                 .AddDbContext<GatefailContext>(op => op.UseNpgsql(configuration.GetBotDbConnectionString()))
@@ -46,6 +50,7 @@ namespace GatefailBot
                 .AddTransient<ICommandChannelRestrictionService, CommandChannelRestrictionService>()
                 .AddTransient<ICachedModuleService, CachedModuleService>()
                 .AddSingleton<IMemoryCache>(provider => new MemoryCache(memCacheOpt))
+                .AddSingleton<ModuleContainer>(provider => moduleContainer)
                 .BuildServiceProvider();
 
             var dbContext = serviceProvider.GetRequiredService<GatefailContext>();
@@ -53,6 +58,7 @@ namespace GatefailBot
             dbContext.Database.Migrate();
 
             var bot = new Bot(serviceProvider, botConfiguration);
+            GetLoadedCommandModules();
 
             Log.Debug("Running bot...");
 
@@ -67,6 +73,17 @@ namespace GatefailBot
                 .WriteTo.File("logs\\log.txt", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 10,
                     shared: true)
                 .CreateLogger();
+        }
+
+        private static ModuleContainer GetLoadedCommandModules()
+        {
+            var modules = Assembly.GetExecutingAssembly().ExportedTypes
+                .Where(t => t.IsSubclassOf(typeof(BaseCommandModule)))
+                .Where(t => t.GetCustomAttributes(typeof(CheckModuleEnabled), true).Length > 0)
+                .GroupBy(t => t.Name, type => type)
+                .ToDictionary(g => g.Key, g => g.First());
+
+            return new ModuleContainer(modules);
         }
     }
 }
