@@ -147,6 +147,7 @@ namespace GatefailBot
         private async Task OnSocketClosed(SocketCloseEventArgs e)
         {
             Log.Error("Socket Closed: " + e.CloseMessage);
+            Environment.Exit(1);
         }
         
         private Task OnCommandError(CommandErrorEventArgs e)
