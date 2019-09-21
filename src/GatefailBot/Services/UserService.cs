@@ -44,7 +44,8 @@ namespace GatefailBot.Services
             var uniqueId = Guid.NewGuid();
             try
             {
-                foreach (var userSnowflake in userSnowflakes)
+                var snowflakes = userSnowflakes.ToList();   
+                foreach (var userSnowflake in snowflakes)
                 {
                     _db.BatchQueries.Add(new BatchQueryItem() {UniqueId = uniqueId, IdToQuery = userSnowflake});
                 }
@@ -57,7 +58,7 @@ namespace GatefailBot.Services
                         (userId, batchItem) => userId)
                     .ToHashSet();
                 
-                var newUsers = userSnowflakes
+                var newUsers = snowflakes
                     .Where(u => !existingUserIds.Contains(u))
                     .Select(u => new GatefailUser() {DiscordId = u});
                 _db.Users.AddRange(newUsers);

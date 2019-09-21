@@ -12,6 +12,7 @@ using Serilog;
 namespace GatefailBot.Modules
 {
     [IgnoreBots]
+    [CheckModuleEnabled(nameof(DebugModule))]
     public class DebugModule : BaseCommandModule
     {
         [Command("ping")]

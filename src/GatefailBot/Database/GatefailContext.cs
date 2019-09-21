@@ -13,6 +13,7 @@ namespace GatefailBot.Database
         public virtual DbSet<Guild> Guilds { get; set; }
         public virtual DbSet<GatefailUser> Users { get; set; }
         public virtual DbSet<CommandChannelRestriction> CommandChannelRestrictions { get; set; }
+        public virtual DbSet<ModuleConfiguration> ModuleConfigurations { get; set; }
         public virtual DbSet<BatchQueryItem> BatchQueries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,6 +23,11 @@ namespace GatefailBot.Database
                 .HasMany(g => g.Users)
                 .WithOne(u => u.Guild)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Guild>()
+                .HasMany(g => g.ModuleConfigurations)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+            
             modelBuilder.Entity<GatefailUser>()
                 .HasIndex(w => w.DiscordId);
             modelBuilder.Entity<BatchQueryItem>()

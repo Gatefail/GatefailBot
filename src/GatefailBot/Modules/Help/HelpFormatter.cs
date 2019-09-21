@@ -6,25 +6,38 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
 using DSharpPlus.Entities;
+using GatefailBot.Services;
+using Microsoft.VisualBasic;
 
 namespace GatefailBot.Modules.Help
 {
     public class HelpFormatter : BaseHelpFormatter
     {
+        private ICachedModuleService _cachedModuleService;
+        private ulong guildId;
         private readonly List<Command> _commands = new List<Command>();
 
         public HelpFormatter(CommandContext ctx) : base(ctx)
         {
+            _cachedModuleService =
+                (ICachedModuleService)ctx.Services.GetService(typeof(ICachedModuleService));
+            guildId = ctx.Guild.Id;
         }
 
         public override BaseHelpFormatter WithCommand(Command command)
         {
-            _commands.Add(command);
+            if (_cachedModuleService.IsModuleEnabled(guildId, command.Module.ModuleType.FullName).GetAwaiter()
+                .GetResult())
+            {
+                _commands.Add(command);
+            }
             return this;
         }
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {
+            subcommands = subcommands.Where(c =>
+                _cachedModuleService.IsModuleEnabled(guildId, nameof(c.Module.ModuleType)).GetAwaiter().GetResult());
             _commands.AddRange(subcommands);
             return this;
         }
@@ -44,19 +57,24 @@ namespace GatefailBot.Modules.Help
         private static CommandHelpMessage Build(IEnumerable<Command> commands)
         {
             var output = string.Join(", ", commands.Select(x => $"`{x.Name}`"));
-
             var embed = new DiscordEmbedBuilder()
-                .WithTitle("WowTracker Help")
-                .WithDescription(
-                    "Listing all commands - use, `!help {commandName}` to get more help for a particular command")
-                .AddField("Commands", output);
+                .WithTitle("Gatefail Bot Help")
+                .WithDescription("Listing all commands - Use `!help {commandName}` to get detailed command help");
+            if(String.IsNullOrEmpty(output))
+            {
+                embed.AddField("Commands", "No commands found. It's likely that no modules are enabled. Talk to an admin to enable modules");
+            }
+            else
+            {
+                embed.AddField("Commands", output);
+            }
 
             return new CommandHelpMessage(embed: embed.Build());
         }
 
         private static CommandHelpMessage Build(Command command)
         {
-            var title = $"WowTracker Help for {command.Name}";
+            var title = $"Gatefail Bot Help for {command.Name}";
 
             var aliases = command.Aliases.Select(x => $"`{x}`").ToList();
 

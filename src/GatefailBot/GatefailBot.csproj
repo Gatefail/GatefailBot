@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00618" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00618" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00618" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00625" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00625" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00625" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.9" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.WebSearch" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />

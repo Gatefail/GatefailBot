@@ -64,6 +64,7 @@ namespace GatefailBot
             _discordClient.GuildDeleted += OnGuildDeleted;
             _discordClient.GuildMemberAdded += OnGuildMemberAdded;
             _discordClient.GuildMemberRemoved += OnGuildMemberRemoved;
+            _discordClient.SocketClosed += OnSocketClosed;
             _discordClient.Ready += _ => Task.FromResult(_clientIsReady = true);
             _commands.CommandErrored += OnCommandError;
         }
@@ -142,6 +143,11 @@ namespace GatefailBot
             var userservice = (IUserService) _serviceProvider.GetService(typeof(IUserService));
             await userservice.DeleteUser(e.Guild.Id, e.Member.Id);
         }
+
+        private async Task OnSocketClosed(SocketCloseEventArgs e)
+        {
+            Log.Error("Socket Closed: " + e.CloseMessage);
+        }
         
         private Task OnCommandError(CommandErrorEventArgs e)
         {
@@ -154,6 +160,8 @@ namespace GatefailBot
 
             return Task.CompletedTask;
         }
+        
+        
 
         private async Task SendLogToDiscord(DebugLogMessageEventArgs logMessage)
         {

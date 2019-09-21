@@ -3,14 +3,16 @@ using System;
 using GatefailBot.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GatefailBot.Migrations
 {
     [DbContext(typeof(GatefailContext))]
-    partial class WowTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20190921172617_moduleconfigs")]
+    partial class moduleconfigs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
