@@ -1,4 +1,4 @@
-# DiscordWowTracker
+# Gatefail Bot
 
 [![Build Status](https://dev.azure.com/Gatefail/GatefailBot/_apis/build/status/Gatefail.GatefailBot?branchName=master)](https://dev.azure.com/Gatefail/GatefailBot/_build/latest?definitionId=1&branchName=master)
 
@@ -9,9 +9,11 @@ This bot is just a small Discord bot written in C#, targeting .NET Core 2.2
 To build the code you need the following installed:
 
 ### Mandatory
+
 - [.NET Core SDK](https://dotnet.microsoft.com/download)
 
 ### Optional
+
 - [Docker](https://www.docker.com/)
 
 ## Running the bot
@@ -40,5 +42,3 @@ Running with this command will mount a local folder to the container, where data
 - Add the token to an environment variable called DiscordToken, or add it to appsettings.{environment}.json. **Remember that your token has to be kept secret**
 - Run the code from your IDE or terminal
 - Create an invite link for your bot [here](https://discordapi.com/permissions.html)
-
-
