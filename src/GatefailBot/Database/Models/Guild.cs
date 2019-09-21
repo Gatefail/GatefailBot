@@ -6,5 +6,6 @@ namespace GatefailBot.Database.Models
     {
         public ulong DiscordId { get; set; }
         public List<GatefailUser> Users { get; set; } = new List<GatefailUser>();
+        public List<ModuleConfiguration> ModuleConfigurations { get; set; } = new List<ModuleConfiguration>();
     }
 }
