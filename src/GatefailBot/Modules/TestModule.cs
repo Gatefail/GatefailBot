@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using GatefailBot.Helpers;
@@ -9,6 +10,7 @@ namespace GatefailBot.Modules
     [IgnoreBots]
     [Group("test")]
     [Aliases("t")]
+    [RequireUserPermissions(Permissions.Administrator)]
     public class TestModule : BaseCommandModule
     {
         private readonly ICachedModuleService _cachedModuleService;
