@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.2-sdk-alpine AS build
+FROM  mcr.microsoft.com/dotnet/core/sdk:3.0.100-alpine3.9 AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -12,7 +12,7 @@ COPY src/GatefailBot/. ./GatefailBot/
 WORKDIR /app/GatefailBot
 RUN dotnet publish -c Release -o out
 
-FROM microsoft/dotnet:2.2-aspnetcore-runtime-alpine AS runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-alpine3.9 AS runtime
 WORKDIR /app
 COPY --from=build /app/GatefailBot/out ./
 RUN mkdir db

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Serilog;
 using Serilog.Core;
 
@@ -32,27 +35,37 @@ namespace GatefailBot
             var configuration = BotConfigurationBuilder.Build();
 
             var botConfiguration = new BotConfiguration();
-
             configuration.Bind(botConfiguration);
-
+            
             var memCacheOpt = Options.Create(new MemoryCacheOptions()
             {
                 ExpirationScanFrequency = TimeSpan.FromSeconds(30)
             });
             
             var moduleContainer = GetLoadedCommandModules();
-            var serviceProvider = new ServiceCollection()
+            var services = new ServiceCollection()
                 .Configure<BotConfiguration>(configuration)
                 .AddDbContext<GatefailContext>(op => op.UseNpgsql(configuration.GetBotDbConnectionString()))
-                .AddHttpClient()
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<IGuildService, GuildService>()
                 .AddTransient<ICommandChannelRestrictionService, CommandChannelRestrictionService>()
                 .AddTransient<ICachedModuleService, CachedModuleService>()
                 .AddSingleton<IMemoryCache>(provider => new MemoryCache(memCacheOpt))
-                .AddSingleton<ModuleContainer>(provider => moduleContainer)
-                .BuildServiceProvider();
-
+                .AddSingleton<ModuleContainer>(provider => moduleContainer);
+            services.AddHttpClient<IMagicHttpService, MagicHttpService>()
+                .ConfigureHttpClient(client =>
+                {
+                    client.Timeout = TimeSpan.FromSeconds(5);
+                    client.MaxResponseContentBufferSize = 5000000;
+                });
+            services.AddHttpClient<IHastebinService, HastebinService>()
+                .ConfigureHttpClient(client =>
+                {
+                    client.Timeout = TimeSpan.FromSeconds(5);
+                    client.MaxResponseContentBufferSize = 5000000;
+                });
+            var serviceProvider = services.BuildServiceProvider();
+            
             var dbContext = serviceProvider.GetRequiredService<GatefailContext>();
 
             dbContext.Database.Migrate();
