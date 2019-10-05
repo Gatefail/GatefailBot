@@ -8,16 +8,23 @@ using GatefailBot.Services;
 namespace GatefailBot.Modules
 {
     [IgnoreBots]
-    [Group("test")]
-    [Aliases("t")]
+    [Group("modconfig")]
+    [Aliases("mc")]
     [RequireUserPermissions(Permissions.Administrator)]
-    public class TestModule : BaseCommandModule
+    public class ModuleControlModule : BaseCommandModule
     {
         private readonly ICachedModuleService _cachedModuleService;
 
-        public TestModule(ICachedModuleService cachedModuleService)
+        public ModuleControlModule(ICachedModuleService cachedModuleService)
         {
             _cachedModuleService = cachedModuleService;
+        }
+
+        [Command("list")]
+        public async Task ListModules(CommandContext ctx)
+        {
+            var guildId = ctx.Guild.Id;
+            
         }
 
         [Command("enable")]

@@ -13,13 +13,10 @@ namespace GatefailBot.Modules.Help
 {
     public class HelpFormatter : BaseHelpFormatter
     {
-        private ICachedModuleService _cachedModuleService;
         private readonly List<Command> _commands = new List<Command>();
 
-        public HelpFormatter(CommandContext ctx) : base(ctx)
+        public HelpFormatter(CommandContext ctx) : base(ctx) 
         {
-            _cachedModuleService =
-                (ICachedModuleService)ctx.Services.GetService(typeof(ICachedModuleService));
         }
 
         public override BaseHelpFormatter WithCommand(Command command)

@@ -15,6 +15,7 @@ namespace GatefailBot.Services
     {
         Task<bool> IsModuleEnabled(ulong guildId, string moduleName);
         Task<ToggleModuleResponse> SetModuleState(ulong guildId, string moduleName, bool activated);
+        IEnumerable<string> GetAllModuleNames();
     }
 
     public class CachedModuleService : ICachedModuleService

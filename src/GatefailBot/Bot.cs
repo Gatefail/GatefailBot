@@ -57,6 +57,7 @@ namespace GatefailBot
             };
             _commands = _discordClient.UseCommandsNext(commandsConfig);
             _commands.RegisterCommands(Assembly.GetExecutingAssembly());
+            _commands.RegisterConverter(new MagicHttpArgumentConverter());
             _commands.SetHelpFormatter<HelpFormatter>();
 
             _discordClient.DebugLogger.LogMessageReceived += OnLogMessageReceived;
