@@ -4,6 +4,7 @@
 
 This bot is just a small Discord bot written in C#, targeting .NET Core 2.2
 
+
 ## Building the code
 
 To build the code you need the following installed:

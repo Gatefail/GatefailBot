@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hastebin
+  name: hastebin
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hastebin
+  template:
+    metadata:
+      labels:
+        app: hastebin
+    spec:
+      containers:
+      - image: gatefail/hastebin:1.0.5
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: hastebin-secret
+        name: hastebin
+        ports:
+        - containerPort: 7777
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
