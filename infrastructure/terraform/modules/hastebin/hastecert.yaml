@@ -1,8 +1,0 @@
-apiVersion: networking.gke.io/v1beta1
-kind: ManagedCertificate
-metadata:
-  name: hastetoppingdev-certificate
-  namespace: default
-spec:
-  domains:
-  - hastebin.topping.dev

@@ -1,15 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.202
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatefailBot", "src\GatefailBot\GatefailBot.csproj", "{F2ACEB8E-52DB-4EA8-B709-62EB06795DFB}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{895D3159-C5C6-4396-8EDB-F25254F1531E}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		NuGet.config = NuGet.config
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatefailBot", "GatefailBot\GatefailBot.csproj", "{D02B2B3F-2283-4462-B259-ED1D4612FDDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,15 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F2ACEB8E-52DB-4EA8-B709-62EB06795DFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2ACEB8E-52DB-4EA8-B709-62EB06795DFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2ACEB8E-52DB-4EA8-B709-62EB06795DFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2ACEB8E-52DB-4EA8-B709-62EB06795DFB}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FA425A1A-55BF-48C9-B111-0C1715CE8EDB}
+		{D02B2B3F-2283-4462-B259-ED1D4612FDDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D02B2B3F-2283-4462-B259-ED1D4612FDDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D02B2B3F-2283-4462-B259-ED1D4612FDDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D02B2B3F-2283-4462-B259-ED1D4612FDDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
