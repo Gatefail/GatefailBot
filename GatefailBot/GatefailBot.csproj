@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <UserSecretsId>dotnet-GatefailBot-761058E9-49AC-48E3-9293-D293C73210D1</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Discord.Net" Version="2.1.1" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.1" />
         <PackageReference Include="Serilog" Version="2.9.0" />
         <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
         <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />

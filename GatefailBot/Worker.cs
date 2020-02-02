@@ -15,15 +15,13 @@ namespace GatefailBot
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly IServiceProvider _provider;
         private readonly DiscordSocketClient _client;
         private readonly CommandHandler _handler;
         private readonly string _token;
 
-        public Worker(DiscordSocketClient client, CommandHandler handler, ILogger<Worker> logger, IOptions<BotOptions> opt, IServiceProvider provider)
+        public Worker(DiscordSocketClient client, CommandHandler handler, ILogger<Worker> logger, IOptions<BotOptions> opt)
         {
             _logger = logger;
-            _provider = provider;
             _handler = handler;
             _token = opt.Value.Token;
             _client = client;
@@ -36,7 +34,7 @@ namespace GatefailBot
                 _logger.LogInformation("BOT IS READY");
                 await _client.SetGameAsync($"Running since: {DateTimeOffset.UtcNow.ToString("s", CultureInfo.InvariantCulture)}Z");
             };
-            await _handler.InstallCommandsAsync(_provider);
+            await _handler.InstallCommandsAsync();
             await _client.LoginAsync(TokenType.Bot, _token);
             await _client.StartAsync();
             await base.StartAsync(cancellationToken);

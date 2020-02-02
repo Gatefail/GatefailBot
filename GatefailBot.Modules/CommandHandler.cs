@@ -24,12 +24,12 @@ namespace GatefailBot.Modules
             _provider = provider;
         }
 
-        public async Task InstallCommandsAsync(IServiceProvider provider)
+        public async Task InstallCommandsAsync()
         {
             _client.MessageReceived += HandleCommandAsync;
             var ass = AppDomain.CurrentDomain.GetAssemblies()
                 .FirstOrDefault(a => a.GetName().Name.Equals(GetType().Namespace));
-            await _commandService.AddModulesAsync(ass, provider);
+            await _commandService.AddModulesAsync(ass, _provider);
         }
         
         

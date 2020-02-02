@@ -8,6 +8,7 @@ using Discord.WebSocket;
 using GatefailBot.Infrastructure;
 using GatefailBot.Modules;
 using GatefailBot.Options;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -109,6 +110,7 @@ namespace GatefailBot
 
             services.AddSingleton<IFarawayDataFetcher, FarawayDataFetcher>();
             services.AddHostedService<Worker>();
+            services.AddDbContext<GatefailContext>(o => o.UseSqlite("Data Source=gatefail.db"));
         }
     }
 }
