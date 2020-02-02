@@ -18,4 +18,8 @@
     <ItemGroup>
       <Folder Include="logs" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GatefailBot.Modules\GatefailBot.Modules.csproj" />
+    </ItemGroup>
 </Project>

@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatefailBot", "GatefailBot\GatefailBot.csproj", "{D02B2B3F-2283-4462-B259-ED1D4612FDDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatefailBot.Modules", "GatefailBot.Modules\GatefailBot.Modules.csproj", "{13B0B369-7BBC-48F3-A840-31646005C6A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatefailBot.Infrastructure", "GatefailBot.Infrastructure\GatefailBot.Infrastructure.csproj", "{4572D469-4002-4CF5-B17F-EB0E72EE14A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{D02B2B3F-2283-4462-B259-ED1D4612FDDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D02B2B3F-2283-4462-B259-ED1D4612FDDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D02B2B3F-2283-4462-B259-ED1D4612FDDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B0B369-7BBC-48F3-A840-31646005C6A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B0B369-7BBC-48F3-A840-31646005C6A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B0B369-7BBC-48F3-A840-31646005C6A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B0B369-7BBC-48F3-A840-31646005C6A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4572D469-4002-4CF5-B17F-EB0E72EE14A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4572D469-4002-4CF5-B17F-EB0E72EE14A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4572D469-4002-4CF5-B17F-EB0E72EE14A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4572D469-4002-4CF5-B17F-EB0E72EE14A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
+using GatefailBot.Infrastructure;
+using GatefailBot.Modules;
 using GatefailBot.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,15 +52,6 @@ namespace GatefailBot
             loggingBuilder.AddSerilog(logger);
         }
 
-        private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
-        {
-            var client = new DiscordSocketClient();
-            client.Log += LogDiscordMessage;
-            services.Configure<BotOptions>(context.Configuration.GetSection("GF"));
-            services.AddHostedService<Worker>();
-            services.AddSingleton(client);
-        }
-
         private static Task LogDiscordMessage(LogMessage msg)
         {
             switch (msg.Severity)
@@ -84,6 +78,37 @@ namespace GatefailBot
             }
 
             return Task.CompletedTask;
+        }
+
+        private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
+        {
+            // Client
+            services.AddSingleton(provider =>
+            {
+                var client = new DiscordSocketClient(new DiscordSocketConfig()
+                {
+                    MessageCacheSize = 1000,
+                    AlwaysDownloadUsers = true
+                });
+                client.Log += LogDiscordMessage;
+                return client;
+            });
+            // CommandService
+            services.AddSingleton(provider =>
+            {
+                var service = new CommandService(new CommandServiceConfig()
+                {
+                    CaseSensitiveCommands = false,
+                    DefaultRunMode = RunMode.Async
+                });
+                return service;
+            });
+            services.AddSingleton<CommandHandler>();
+
+            services.Configure<BotOptions>(context.Configuration.GetSection("GF"));
+
+            services.AddSingleton<IFarawayDataFetcher, FarawayDataFetcher>();
+            services.AddHostedService<Worker>();
         }
     }
 }
